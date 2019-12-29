@@ -11,34 +11,34 @@ import java.util.Random;
 public class SnakePanel extends JPanel implements KeyListener, ActionListener {
 
     // 定义七个图片变量，代表七张图片
-    ImageIcon up = new ImageIcon("src/snake/v1/pic/up.png"); // 向上的蛇头
-    ImageIcon down = new ImageIcon("src/snake/v1/pic/down.png"); // 向下的蛇头
-    ImageIcon left = new ImageIcon("src/snake/v1/pic/left.png"); // 向左的蛇头
-    ImageIcon right = new ImageIcon("src/snake/v1/pic/right.png"); // 向右的蛇头
-    ImageIcon food = new ImageIcon("src/snake/v1/pic/food.png");  // 食物
-    ImageIcon body = new ImageIcon("src/snake/v1/pic/body.png");  // 蛇的身体
-    ImageIcon title = new ImageIcon("src/snake/v1/pic/title.jpg"); // 游戏界面的主题
+    private ImageIcon up = new ImageIcon("src/snake/v1/pic/up.png"); // 向上的蛇头
+    private ImageIcon down = new ImageIcon("src/snake/v1/pic/down.png"); // 向下的蛇头
+    private ImageIcon left = new ImageIcon("src/snake/v1/pic/left.png"); // 向左的蛇头
+    private ImageIcon right = new ImageIcon("src/snake/v1/pic/right.png"); // 向右的蛇头
+    private ImageIcon food = new ImageIcon("src/snake/v1/pic/food.png");  // 食物
+    private ImageIcon body = new ImageIcon("src/snake/v1/pic/body.png");  // 蛇的身体
+    private ImageIcon title = new ImageIcon("src/snake/v1/pic/title.jpg"); // 游戏界面的主题
 
     // 蛇的每一部分
-    int[] snakex = new int[750];
-    int[] snakey = new int[750];
+    private int[] snakex = new int[750];
+    private int[] snakey = new int[750];
 
     // 随机生成食物
-    Random rand = new Random();
-    int foodx = rand.nextInt(34) * 25 + 25; //此处的数值根据自己设计的游戏界面的大小来确定
-    int foody = rand.nextInt(24) * 25 + 75;
+    private Random rand = new Random();
+    private int foodx = rand.nextInt(34) * 25 + 25; //此处的数值根据自己设计的游戏界面的大小来确定
+    private int foody = rand.nextInt(24) * 25 + 75;
 
     // 设置游戏的默认属性
-    int len = 3;
-    int score = 0;
-    String direction = "R"; // U上 D下 L左 R右
+    private int len = 3;
+    private int score = 0;
+    private String direction = "R"; // U上 D下 L左 R右
 
-    boolean isStarted = false; // 判断游戏是否开始
-    boolean isFailed = false; // 判断游戏是否结束
+    private boolean isStarted = false; // 判断游戏是否开始
+    private boolean isFailed = false; // 判断游戏是否结束
 
-    Timer timer = new Timer(100, this); // 每100毫秒调用一次ActionPerformed
+    private Timer timer = new Timer(100, this); // 每100毫秒调用一次ActionPerformed
 
-    public SnakePanel() { // 建造画布的构造函数
+    SnakePanel() { // 建造画布的构造函数
         this.setFocusable(true);  // 获取焦点
         this.addKeyListener(this); // 监听键盘事件
         setup();
@@ -51,14 +51,20 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener {
         g.fillRect(25, 75, 850, 650); // 用画笔设置游戏方框
 
         // 画蛇头（注意判断蛇头的方向）
-        if (direction.equals("R"))
-            right.paintIcon(this, g, snakex[0], snakey[0]);
-        else if (direction.equals("L"))
-            left.paintIcon(this, g, snakex[0], snakey[0]);
-        else if (direction.equals("U"))
-            up.paintIcon(this, g, snakex[0], snakey[0]);
-        else if (direction.equals("D"))
-            down.paintIcon(this, g, snakex[0], snakey[0]);
+        switch (direction) {
+            case "R":
+                right.paintIcon(this, g, snakex[0], snakey[0]);
+                break;
+            case "L":
+                left.paintIcon(this, g, snakex[0], snakey[0]);
+                break;
+            case "U":
+                up.paintIcon(this, g, snakex[0], snakey[0]);
+                break;
+            case "D":
+                down.paintIcon(this, g, snakex[0], snakey[0]);
+                break;
+        }
 
         // 画蛇的身体
         for (int i = 1; i < len; i++)
@@ -88,7 +94,7 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener {
         g.drawString("Len :" + len, 650, 57);
     }
 
-    public void setup() { // 游戏初始化
+    private void setup() { // 游戏初始化
         isStarted = false;
         isFailed = false;
         len = 3;
@@ -112,13 +118,13 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener {
                 setup();
             } else
                 isStarted = !isStarted;
-        } else if (KeyCode == KeyEvent.VK_UP && direction != "D")
+        } else if (KeyCode == KeyEvent.VK_UP && !direction.equals("D"))
             direction = "U";
-        else if (KeyCode == KeyEvent.VK_DOWN && direction != "U")
+        else if (KeyCode == KeyEvent.VK_DOWN && !direction.equals("U"))
             direction = "D";
-        else if (KeyCode == KeyEvent.VK_RIGHT && direction != "L")
+        else if (KeyCode == KeyEvent.VK_RIGHT && !direction.equals("L"))
             direction = "R";
-        else if (KeyCode == KeyEvent.VK_LEFT && direction != "R")
+        else if (KeyCode == KeyEvent.VK_LEFT && !direction.equals("R"))
             direction = "L";
     }
 
@@ -136,18 +142,23 @@ public class SnakePanel extends JPanel implements KeyListener, ActionListener {
             }
 
             // 移动头
-            if (direction.equals("R")) {
-                snakex[0] = snakex[0] + 25;
-                if (snakex[0] > 850) snakex[0] = 25;
-            } else if (direction.equals("L")) {
-                snakex[0] = snakex[0] - 25;
-                if (snakex[0] < 25) snakex[0] = 850;
-            } else if (direction.equals("U")) {
-                snakey[0] = snakey[0] - 25;
-                if (snakey[0] < 75) snakey[0] = 650;
-            } else if (direction.equals("D")) {
-                snakey[0] = snakey[0] + 25;
-                if (snakey[0] > 650) snakey[0] = 75;
+            switch (direction) {
+                case "R":
+                    snakex[0] = snakex[0] + 25;
+                    if (snakex[0] > 850) snakex[0] = 25;
+                    break;
+                case "L":
+                    snakex[0] = snakex[0] - 25;
+                    if (snakex[0] < 25) snakex[0] = 850;
+                    break;
+                case "U":
+                    snakey[0] = snakey[0] - 25;
+                    if (snakey[0] < 75) snakey[0] = 650;
+                    break;
+                case "D":
+                    snakey[0] = snakey[0] + 25;
+                    if (snakey[0] > 650) snakey[0] = 75;
+                    break;
             }
 
             if (snakex[0] == foodx && snakey[0] == foody) {  // 吃食物
