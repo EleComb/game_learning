@@ -11,13 +11,13 @@ import java.util.Random;
 public class SnakePanel extends JPanel implements KeyListener, ActionListener {
 
     // 定义七个图片变量，代表七张图片
-    private ImageIcon up = new ImageIcon("src/snake/v1/pic/up.png"); // 向上的蛇头
-    private ImageIcon down = new ImageIcon("src/snake/v1/pic/down.png"); // 向下的蛇头
-    private ImageIcon left = new ImageIcon("src/snake/v1/pic/left.png"); // 向左的蛇头
-    private ImageIcon right = new ImageIcon("src/snake/v1/pic/right.png"); // 向右的蛇头
-    private ImageIcon food = new ImageIcon("src/snake/v1/pic/food.png");  // 食物
-    private ImageIcon body = new ImageIcon("src/snake/v1/pic/body.png");  // 蛇的身体
-    private ImageIcon title = new ImageIcon("src/snake/v1/pic/title.jpg"); // 游戏界面的主题
+    private ImageIcon up = new ImageIcon("src/Snake/v1/pic/up.png"); // 向上的蛇头
+    private ImageIcon down = new ImageIcon("src/Snake/v1/pic/down.png"); // 向下的蛇头
+    private ImageIcon left = new ImageIcon("src/Snake/v1/pic/left.png"); // 向左的蛇头
+    private ImageIcon right = new ImageIcon("src/Snake/v1/pic/right.png"); // 向右的蛇头
+    private ImageIcon food = new ImageIcon("src/Snake/v1/pic/food.png");  // 食物
+    private ImageIcon body = new ImageIcon("src/Snake/v1/pic/body.png");  // 蛇的身体
+    private ImageIcon title = new ImageIcon("src/Snake/v1/pic/title.jpg"); // 游戏界面的主题
 
     // 蛇的每一部分
     private int[] snakex = new int[750];

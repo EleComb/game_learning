@@ -2,7 +2,7 @@ package snake.v1;
 
 import javax.swing.*;
 
-public class Sanke {
+public class SankeGame {
     public static void main(String[] args) {
         JFrame frame = new JFrame(); // 创建一个游戏界面的框架
         frame.setBounds(10, 10, 900, 720); // 设置框架的大小
