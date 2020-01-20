@@ -1,5 +1,6 @@
 from ab_trival_game.b_trivia.source.options import *
 
+
 class Trivia(object):
     def __init__(self, filename):
         self.data = []

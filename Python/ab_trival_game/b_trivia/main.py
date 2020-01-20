@@ -4,7 +4,6 @@ from ab_trival_game.b_trivia.source.trivia import Trivia
 from ab_trival_game.b_trivia.source.options import *
 
 
-
 # load the trivia data file
 trivia2 = Trivia("source\\trivia_data.txt")
 
