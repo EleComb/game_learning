@@ -1,7 +1,4 @@
-from ab_trival_game.b_trivia.main import *
-import sys, pygame
-from pygame.locals import *
-
+from ab_trival_game.b_trivia.source.options import *
 
 class Trivia(object):
     def __init__(self, filename):
@@ -78,55 +75,3 @@ class Trivia(object):
             if self.current >= self.total:
                 self.current = 0
 
-
-def print_text(font, x, y, text, color=(255, 255, 255), shadow=True):
-    if shadow:
-        imgText = font.render(text, True, (0, 0, 0))
-        screen.blit(imgText, (x-2, y-2))
-    imgText = font.render(text, True, color)
-    screen.blit(imgText, (x, y))
-
-
-# main program begins
-pygame.init()
-screen = pygame.display.set_mode((600, 500))
-pygame.display.set_caption("The Trivia Game")
-font1 = pygame.font.Font(None, 40)
-font2 = pygame.font.Font(None, 24)
-white = 255, 255, 255
-cyan = 0, 255, 255
-yellow = 255, 255, 0
-purple = 255, 0, 255
-green = 0, 255, 0
-red = 255, 0, 0
-
-# load the trivia data file
-trivia2 = Trivia("trivia_data.txt")
-
-# repeating loop
-while True:
-    for event in pygame.event.get():
-        if event.type == QUIT:
-            sys.exit()
-        elif event.type == KEYUP:
-            if event.key ==pygame.K_ESCAPE:
-                sys.exit()
-            elif event.key == pygame.K_1:
-                trivia2.handle_input(1)
-            elif event.key == pygame.K_2:
-                trivia2.handle_input(2)
-            elif event.key == pygame.K_3:
-                trivia2.handle_input(3)
-            elif event.key == pygame.K_4:
-                trivia2.handle_input(4)
-            elif event.key == pygame.K_RETURN:
-                trivia2.next_question()
-
-    # clear the screen
-    screen.fill((0, 0, 200))
-
-    # display trivia data
-    trivia2.show_question()
-
-    # update the display
-    pygame.display.update()
