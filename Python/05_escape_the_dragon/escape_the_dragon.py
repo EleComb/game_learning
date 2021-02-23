@@ -90,7 +90,7 @@ arrow.load("flame.png", 40, 16, 1)
 arrow.position = 800, 320
 group.add(arrow)
 
-arrow_vel = 8.0
+arrow_vel = 12.0
 game_over = False
 you_win = False
 player_jumping = False
@@ -108,11 +108,11 @@ while True:
     if key[K_ESCAPE]:
         sys.exit()
     elif key[K_SPACE]:
-        if not player_jumping:
+        if not player_jumping and not game_over:
             player_jumping = True
-        jump_vel = -8.0
+            jump_vel = -8.0
     elif key[K_q]:
-        arrow_vel = 8.0
+        arrow_vel = 12.0
         game_over = False
         you_win = False
         player_jumping = False
@@ -126,11 +126,11 @@ while True:
 
     if pygame.sprite.collide_rect(arrow, player):
         reset_arrow()
-        player.X -= 10
+        player.X -= 40
 
     if pygame.sprite.collide_rect(arrow, dragon):
         reset_arrow()
-        dragon.X -= 10
+        dragon.X -= 20
 
     if pygame.sprite.collide_rect(player, dragon):
         game_over = True
