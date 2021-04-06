@@ -1,5 +1,3 @@
-import itertools, sys, time, random, math, pygame
-from pygame.locals import *
 from _.MyLibrary import *
 
 
@@ -63,6 +61,7 @@ player_moving = False
 player_health = 100
 
 ticks_lock = 0
+zombie_group_tmp = zombie_group.copy()
 # repeating loop
 while True:
 
@@ -74,6 +73,7 @@ while True:
         zombie.position = random.randint(0, 700), random.randint(0, 500)
         zombie.direction = random.randint(0, 3) * 2
         zombie_group.add(zombie)
+        zombie_group_tmp = zombie_group.copy()
         ticks_lock = int(ticks/1000)
 
     for event in pygame.event.get():
@@ -156,6 +156,23 @@ while True:
             else:
                 attacker = None
 
+        # zombie collision
+        # Not Good Performance
+        # zombie_group_tmp = zombie_group.copy()
+        for one_zombie in zombie_group.spritedict:
+            zombie_group_tmp.remove(one_zombie)
+            zombie_collision = pygame.sprite.spritecollideany(one_zombie, zombie_group_tmp)
+            if zombie_collision is not None:
+                if pygame.sprite.collide_rect_ratio(0.5)(one_zombie, zombie_collision):
+                    if zombie_collision.X < one_zombie.X:
+                        reverse_direction(one_zombie)
+                        zombie_collision.X -= 10
+                        reverse_direction(zombie_collision)
+                    elif zombie_collision.X > one_zombie.X:
+                        zombie_collision.X += 10
+                        reverse_direction(one_zombie)
+                        reverse_direction(zombie_collision)
+            zombie_group_tmp.add(one_zombie)
 
         # update the health drop
         health_group.update(ticks, 50)
