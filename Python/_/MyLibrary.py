@@ -35,14 +35,15 @@ class MySprite(pygame.sprite.Sprite):
     def _setpos(self, pos): self.rect.topleft = pos
     position = property(_getpos, _setpos)
 
-    def load(self, filename, width, height, columns):
+    def load(self, filename, width=0, height=0, columns=1):
         self.master_image = pygame.image.load(filename).convert_alpha()
-        self.frame_width = width
-        self.frame_height = height
-        self.rect = Rect(0, 0, width, height)
-        self.columns = columns
-        rect = self.master_image.get_rect()
-        self.last_frame = (rect.width // width) * (rect.height // height) - 1
+        # self.frame_width = width
+        # self.frame_height = height
+        # self.rect = Rect(0, 0, width, height)
+        # self.columns = columns
+        # rect = self.master_image.get_rect()
+        # self.last_frame = (rect.width // width) * (rect.height // height) - 1
+        self.set_image(self.master_image, width, height, columns)
 
     def update(self, current_time, rate=30):
         if current_time > self.last_time + rate:
@@ -50,6 +51,8 @@ class MySprite(pygame.sprite.Sprite):
             if self.frame > self.last_frame:
                 self.frame = self.first_frame
             self.last_time = current_time
+        else:
+            self.frame = self.first_frame
 
         if self.frame != self.old_frame:
             frame_x = (self.frame % self.columns) * self.frame_width
@@ -57,6 +60,19 @@ class MySprite(pygame.sprite.Sprite):
             rect = Rect(frame_x, frame_y, self.frame_width, self.frame_height)
             self.image = self.master_image.subsurface(rect)
             self.old_frame = self.frame
+
+    def set_image(self, image, width=0, height=0, columns=1):
+        self.master_image = image
+        if width == 0 and height == 0:
+            self.frame_width = image.get_width()
+            self.frame_height = image.get_height()
+        else:
+            self.frame_width = width
+            self.frame_height = height
+            rect = self.master_image.get_rect()
+            self.last_frame = (rect.width // width) * (rect.height // height) - 1
+        self.rect = Rect(0, 0, self.frame_width, self.frame_height)
+        self.columns = columns
 
     def __str__(self):
         return str(self.frame) + "," + str(self.first_frame) + \
