@@ -286,7 +286,6 @@ while True:
     print_text(font, 200, 0, "LEVEL " + str(level + 1))
     print_text(font, 400, 0, "BLOCKS " + str(len(block_group)))
     print_text(font, 670, 0, "BALLS " + str(lives))
-    print_text(font, 0, 200, "vy" + str(ball.velocity.y))
 
     if game_over:
         print_text(font, 300, 380, "G A M E O V E R")
