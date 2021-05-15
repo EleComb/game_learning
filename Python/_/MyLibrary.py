@@ -8,6 +8,28 @@ def print_text(font, x, y, text, color=(255, 255, 255)):
     screen.blit(imgText, (x, y))
 
 
+# claculates velocity of an angle
+def angular_velocity(angle):
+    vel = Point(0, 0)
+    vel.x = math.cos(math.radians(angle))
+    vel.y = math.sin(math.radians(angle))
+    return vel
+
+
+# calculates angle between two points
+def target_angle(x1, y1, x2, y2):
+    delta_x = x2 - x1
+    delta_y = y2 - y1
+    angle_radians = math.atan2(delta_y, delta_x)
+    angle_degrees = math.degrees(angle_radians)
+    return angle_degrees
+
+
+# wraps a degree angle at boundary
+def wrap_angle(angle):
+    return abs(angle % 360)
+
+
 class MySprite(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
